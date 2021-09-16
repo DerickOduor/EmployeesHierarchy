@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 namespace EmployeesHierarchy
 {
     public class Employee
@@ -17,7 +16,7 @@ namespace EmployeesHierarchy
             int Salary = 0;
             int Manager = 0;
 
-            Salary=ValidateSalary(EmployeeSalary);
+            Salary = ValidateSalary(EmployeeSalary);
 
             if (!int.TryParse(ManagerId, out Manager))
             {
@@ -28,7 +27,7 @@ namespace EmployeesHierarchy
             this.ManagerId = Manager;
             this.EmployeeSalary = Salary;
 
-            Employees.Add(new Employee { EmployeeId=this.EmployeeId,ManagerId=this.ManagerId,EmployeeSalary=this.EmployeeSalary});
+            Employees.Add(new Employee { EmployeeId = this.EmployeeId, ManagerId = this.ManagerId, EmployeeSalary = this.EmployeeSalary });
 
             return AddedEployees;
         }
@@ -57,7 +56,8 @@ namespace EmployeesHierarchy
             var e = this.Employees;
             if (employees.Where(e => e.ManagerId == null || e.ManagerId == 0).ToList().Count > 1)
             {
-                throw new EmployeeException("Number of CEOs is greater than one!");
+                return false;
+                //throw new EmployeeException("Number of CEOs is greater than one!");
             }
             else
             {
@@ -69,12 +69,13 @@ namespace EmployeesHierarchy
         {
             var e = this.Employees;
             int Count = 0;
-            foreach(int EmployeeId in employees.Select(e => e.EmployeeId).Distinct())
+            foreach (int EmployeeId in employees.Select(e => e.EmployeeId).Distinct())
             {
-                List<int> Managers=employees.Where(e=>e.EmployeeId==EmployeeId).Select(e=>e.ManagerId).ToList();
-                if(Managers.Count > 1)
+                List<int> Managers = employees.Where(e => e.EmployeeId == EmployeeId).Select(e => e.ManagerId).ToList();
+                if (Managers.Count > 1)
                 {
-                    throw new EmployeeException("Employee With ID ("+EmployeeId+") has more than one manager!");
+                    return false;
+                    //throw new EmployeeException("Employee With ID (" + EmployeeId + ") has more than one manager!");
                 }
             }
 
@@ -85,17 +86,18 @@ namespace EmployeesHierarchy
         {
             var e = this.Employees;
             int Count = 0;
-            foreach(int ManagerId in employees.Where(e => e.ManagerId != 0).Select(e => e.ManagerId).Distinct())
+            foreach (int ManagerId in employees.Where(e => e.ManagerId != 0).Select(e => e.ManagerId).Distinct())
             {
-                List<int> Managers=employees.Where(e=>e.EmployeeId== ManagerId).
-                    Select(e=>e.ManagerId).ToList();
-                if(Managers == null)
+                List<int> Managers = employees.Where(e => e.EmployeeId == ManagerId).
+                    Select(e => e.ManagerId).ToList();
+                if (Managers == null)
                 {
-                    throw new EmployeeException("Manager With ID ("+ ManagerId + ") is not an employee!");
+                    throw new EmployeeException("Manager With ID (" + ManagerId + ") is not an employee!");
                 }
-                if(Managers.Count == 0)
+                if (Managers.Count == 0)
                 {
-                    throw new EmployeeException("Manager With ID ("+ ManagerId + ") is not an employee!");
+                    return false;
+                    //throw new EmployeeException("Manager With ID (" + ManagerId + ") is not an employee!");
                 }
             }
 
@@ -106,17 +108,18 @@ namespace EmployeesHierarchy
         {
             var e = this.Employees;
             int Count = 0;
-            foreach(Employee employee in employees)
+            foreach (Employee employee in employees)
             {
-                Employee manager=employees.Where(e =>
-                e.ManagerId !=0 
-                & e.EmployeeId==employee.ManagerId
-                & e.ManagerId==employee.EmployeeId
-                
+                Employee manager = employees.Where(e =>
+                  e.ManagerId != 0
+                  & e.EmployeeId == employee.ManagerId
+                  & e.ManagerId == employee.EmployeeId
+
                 ).FirstOrDefault();
 
                 if (manager != null)
-                    throw new EmployeeException("Circular Refering Occured");
+                    return false;
+                    //throw new EmployeeException("Circular Refering Occured");
             }
 
             return true;
@@ -134,13 +137,13 @@ namespace EmployeesHierarchy
 
         public Employee(string EmployeeCsvString)
         {
-            Employees=new List<Employee>();
+            Employees = new List<Employee>();
             string[] EmployeeCsv = EmployeeCsvString.Split('\n');
-            Employee employee=new Employee(Employees);
+            Employee employee = new Employee(Employees);
             foreach (string EmployeeData in EmployeeCsv)
             {
                 if (EmployeeData.Equals("")) break;
-                string[] Employee=EmployeeData.Split(',');
+                string[] Employee = EmployeeData.Split(',');
 
                 employee.Employees = AddEmployee(Employee[0], Employee[1], Employee[2], employee.Employees);
                 employee = new Employee(Employees);
@@ -158,13 +161,13 @@ namespace EmployeesHierarchy
         public long SalaryBudget(string ManagerId)
         {
             long TotalSalary = 0;
-            TotalSalary+= this.Employees.Where(e => e.EmployeeId == int.Parse(ManagerId)).FirstOrDefault().EmployeeSalary;
-            foreach (Employee Employee in Employees.Where(e=>e.ManagerId == int.Parse(ManagerId)).ToList())
+            TotalSalary += this.Employees.Where(e => e.EmployeeId == int.Parse(ManagerId)).FirstOrDefault().EmployeeSalary;
+            foreach (Employee Employee in Employees.Where(e => e.ManagerId == int.Parse(ManagerId)).ToList())
             {
                 List<Employee> SubEmployees = Employees.Where(e => e.ManagerId == int.Parse(Employee.EmployeeId.ToString())).ToList();
                 if (SubEmployees != null)
                 {
-                    if(SubEmployees.Count() > 0)
+                    if (SubEmployees.Count() > 0)
                         TotalSalary += SalaryBudget(Employee.EmployeeId.ToString());
                     else
                         TotalSalary += Employee.EmployeeSalary;
@@ -176,5 +179,4 @@ namespace EmployeesHierarchy
             return TotalSalary;
         }
     }
-
 }
