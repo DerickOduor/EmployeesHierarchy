@@ -28,40 +28,8 @@ namespace EmployeesHierarchyTest
             Assert.True(result == 0, Value+" should be greater than zero.");
         }
 
-        //[Theory]
-        ////[InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 2, 300\n12, 11, 500")]
-        ////[InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11,, 300")]
-        //[InlineData("1,,10002, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n10, 11, 400")]
-        ////[InlineData("1,,10002, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n6, 5, 300")]
-        ////[InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 12, 300\n12, 11, 500")]
-        //public void PassTestValidation(string EmployeeCSV)
-        //{
-        //    Action testCode = () => { new Employee(EmployeeCSV); };
-
-        //    var ex = Record.Exception(testCode);
-
-        //    Assert.NotNull(ex);
-        //    Assert.IsType<EmployeeException>(ex);
-        //}
-
-        //[Theory]
-        //[InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 2, 300\n12, 11, 500")]
-        //[InlineData("1,,10002, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n10, 11, 400")]
-        //[InlineData("1,,10002, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n6, 5, 300")]
-        //[InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 12, 300\n12, 11, 500")]
-        //public void FailTestValidation(string EmployeeCSV)
-        //{
-        //    Action testCode = () => { new Employee(EmployeeCSV); };
-
-        //    var ex = Record.Exception(testCode);
-
-        //    Assert.Null(ex);
-        //    Assert.IsNotType<EmployeeException>(ex);
-        //}
-
         [Theory]
         [InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 2, 300\n12, 11, 500")]
-        //[InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11,, 300")]
         public void PassTestNumberOfCEOs(string EmployeeCSV)
         {
             Employee employee=new Employee(EmployeeCSV);
@@ -71,7 +39,6 @@ namespace EmployeesHierarchyTest
         }
 
         [Theory]
-        //[InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 2, 300\n12, 11, 500")]
         [InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11,, 300")]
         public void FailTestNumberOfCEOs(string EmployeeCSV)
         {
@@ -83,7 +50,6 @@ namespace EmployeesHierarchyTest
 
         [Theory]
         [InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 2, 300\n12, 11, 500")]
-        //[InlineData("1,,10002, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n10, 11, 400")]
         public void PassTestManagersAreEmployees(string EmployeeCSV)
         {
             Employee employee=new Employee(EmployeeCSV);
@@ -93,7 +59,6 @@ namespace EmployeesHierarchyTest
         }
 
         [Theory]
-        //[InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 2, 300\n12, 11, 500")]
         [InlineData("1,,10002, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n10, 11, 400")]
         public void FailTestManagersAreEmployees(string EmployeeCSV)
         {
@@ -105,7 +70,6 @@ namespace EmployeesHierarchyTest
 
         [Theory]
         [InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 2, 300\n12, 11, 500")]
-        //[InlineData("1,,10002, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n6, 5, 300")]
         public void PassTestNumberOfEmployeeManager(string EmployeeCSV)
         {
             Employee employee=new Employee(EmployeeCSV);
@@ -115,7 +79,6 @@ namespace EmployeesHierarchyTest
         }
 
         [Theory]
-        //[InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 2, 300\n12, 11, 500")]
         [InlineData("1,,10002, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n6, 5, 300")]
         public void FailTestNumberOfEmployeeManager(string EmployeeCSV)
         {
@@ -126,7 +89,6 @@ namespace EmployeesHierarchyTest
         }
 
         [Theory]
-        //[InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 12, 300\n12, 11, 500")]
         [InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 2, 300\n12, 11, 500")]
         public void PassTestCircularReferencing(string EmployeeCSV)
         {
@@ -137,7 +99,6 @@ namespace EmployeesHierarchyTest
         }
 
         [Theory]
-        //[InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 2, 300\n12, 11, 500")]
         [InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 12, 300\n12, 11, 500")]
         public void FailTestCircularReferencing(string EmployeeCSV)
         {
@@ -146,18 +107,6 @@ namespace EmployeesHierarchyTest
 
             Assert.False(result, "There is no circular referencing.");
         }
-
-        //[Theory]
-        //[InlineData("1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 12, 300\n12, 11, 500")]
-        //public void TestCircularReferencingException(string EmployeeCSV)
-        //{
-        //    Action testCode = () => { new Employee(EmployeeCSV); };
-
-        //    var ex = Record.Exception(testCode);
-
-        //    Assert.NotNull(ex);
-        //    Assert.IsType<EmployeeException>(ex);
-        //}
 
         [Theory]
         [InlineData("1", "1,,1000\n2, 1, 800\n3, 1, 500\n4, 2, 500\n6, 2, 500\n5, 1, 500\n11, 2, 300\n12, 11, 500")]
